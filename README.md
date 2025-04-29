@@ -80,3 +80,36 @@ For state management, we have chosen **Redux Toolkit** (RTK) for the following r
 ### Summary:
 
 Redux Toolkit strikes the right balance between **simplicity, structure, and scalability**, making it the ideal choice for this project given the expected complexity of authentication, role-based control, and data visualization features.
+
+## 🔐 Role-Based Control (RBC) and Supabase Row Level Security (RLS)
+
+This project uses a **Role-Based Control (RBC)** system to ensure users only access the data and actions allowed for their role. The supported roles are:
+
+-   **policy_holder** – Can view and update only their own policies.
+-   **agent** – Can view policies assigned to their clients and update statuses.
+-   **admin** – Full access to all policies and user management features.
+
+### 🔐 Frontend RBC (React)
+
+-   Upon login, user role metadata is retrieved from Supabase.
+-   The React UI dynamically adapts based on the role:
+    -   `policy_holder` sees only their policy details.
+    -   `agent` can manage their client list and policies.
+    -   `admin` has access to all dashboard features.
+-   Routes, buttons, and forms are conditionally rendered based on role.
+-   Global Redux state holds user role after login and is used to guard navigation and actions.
+
+### 🔐 Backend RBC (Supabase RLS)
+
+-   **Row Level Security (RLS)** is enabled on the `policies` table.
+-   Supabase policies are written to ensure users **can only read or modify rows they are authorized for**.
+-   For example:
+    -   A `policy_holder` can only `SELECT` or `UPDATE` rows where `user_id = auth.uid()`
+    -   An `agent` can only access policies they are linked to via a join table or foreign key.
+    -   An `admin` bypasses row filters via a `role = 'admin'` policy.
+
+### ✅ Security
+
+Even if someone bypasses the frontend and directly uses Supabase API, RLS ensures data cannot be read, updated, or deleted unless they meet role conditions.
+
+This makes the app secure by enforcing business rules both in UI and at the data layer.

@@ -25,6 +25,7 @@ import {
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { logout } from "@/slices/authSlice";
+import { supabase } from "@/lib/supabaseClient";
 
 export function NavUser({
     user,
@@ -38,8 +39,13 @@ export function NavUser({
     const { isMobile } = useSidebar();
     const dispatch = useDispatch<AppDispatch>();
 
-    const handleLogout = () => {
-        dispatch(logout());
+    const handleLogout = async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error("Error during logout:", error.message);
+        } else {
+            dispatch(logout());
+        }
     };
     return (
         <SidebarMenu>
@@ -51,8 +57,8 @@ export function NavUser({
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                         >
                             <Avatar className="h-8 w-8 rounded-lg grayscale">
-                                <AvatarImage src={user.avatar} alt={user.name} />
-                                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                                <AvatarImage src="https://github.com/shadcn.png" />
+                                <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                             <div className="grid flex-1 text-left text-sm leading-tight">
                                 <span className="truncate font-medium">{user.name}</span>
