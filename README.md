@@ -113,3 +113,53 @@ This project uses a **Role-Based Control (RBC)** system to ensure users only acc
 Even if someone bypasses the frontend and directly uses Supabase API, RLS ensures data cannot be read, updated, or deleted unless they meet role conditions.
 
 This makes the app secure by enforcing business rules both in UI and at the data layer.
+
+## 📊 Charting Implementation and Data Handling for Visualizations
+
+This project uses **[Recharts](https://recharts.org/)** for building interactive and responsive charts within the insurance policy dashboard. Recharts was chosen for its simplicity, TypeScript support, and seamless integration with React and Tailwind.
+
+### ✅ Why Recharts?
+
+-   Built with React in mind
+-   Strong TypeScript support
+-   Responsive and composable chart components
+-   Easy to integrate with filtered Supabase data
+-   Customizable tooltips, legends, and axes
+
+---
+
+### 📈 Implemented Charts
+
+The dashboard includes dynamic visualizations for policy insights:
+
+1. **Stacked Bar Chart** – Shows policy count by type (e.g., term, health) and status (active, expired, lapsed).
+2. **Line Chart** – Displays total premium coverage trend over time.
+3. **Pie Chart** – Illustrates distribution of policies by region or agent.
+
+Each chart:
+
+-   Updates based on user filters (e.g., policy type, date range, user role)
+-   Is responsive and adapts to desktop and mobile views
+-   Pulls data dynamically from Supabase and handles loading/errors gracefully
+
+---
+
+### 🔄 Data Handling Flow
+
+1. **Fetch policy data** from Supabase using `select()` queries with filters and pagination as needed.
+2. **Transform data** into chart-ready structures inside hooks or utility functions (e.g., grouped by type, status, or date).
+3. **Feed transformed data** into chart components from Recharts using props.
+4. Charts update in real time as filters change, or when new data is inserted (Realtime support planned as a stretch goal).
+
+---
+
+### 🔐 Role-based Filtering
+
+-   `policy_holder` sees only their own data in charts
+-   `agent` sees aggregate data for their assigned clients
+-   `admin` sees the full dataset across all policies and users
+
+These filters are enforced both:
+
+-   In the frontend (through Supabase queries)
+-   And via Supabase **Row Level Security (RLS)** rules on the `policies` table
