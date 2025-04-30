@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
-import { logout } from "@/slices/authSlice";
+import { signout } from "@/slices/authSlice";
 import { supabase } from "@/lib/supabaseClient";
 
 export function NavUser({
@@ -44,7 +44,7 @@ export function NavUser({
         if (error) {
             console.error("Error during logout:", error.message);
         } else {
-            dispatch(logout());
+            dispatch(signout());
         }
     };
     return (
