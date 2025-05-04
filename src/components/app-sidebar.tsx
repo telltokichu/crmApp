@@ -1,4 +1,4 @@
-import * as React from "react";
+import type React from "react";
 import {
     IconCamera,
     IconChartBar,
@@ -31,7 +31,7 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import type { RootState } from "@/store/store";
 
 const data = {
     user: {
@@ -162,7 +162,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             asChild
                             className="data-[slot=sidebar-menu-button]:!p-1.5"
                         >
-                            <a href="#">
+                            <a href="/dashboard">
                                 <IconInnerShadowTop className="!size-5" />
                                 <span className="text-base font-semibold">CRM App</span>
                             </a>

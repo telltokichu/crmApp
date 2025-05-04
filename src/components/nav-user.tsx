@@ -23,7 +23,7 @@ import {
     useSidebar,
 } from "@/components/ui/sidebar";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
+import type { AppDispatch } from "@/store/store";
 import { signout } from "@/slices/authSlice";
 import { supabase } from "@/lib/supabaseClient";
 

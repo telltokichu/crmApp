@@ -8,14 +8,19 @@ import { BrowserRouter } from "react-router-dom";
 
 import "./assets/styles/app.css";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
-            </ThemeProvider>
-        </Provider>
-    </React.StrictMode>
-);
+const rootElement = document.getElementById("root");
+if (rootElement) {
+    ReactDOM.createRoot(rootElement).render(
+        <React.StrictMode>
+            <Provider store={store}>
+                <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+                    <BrowserRouter>
+                        <App />
+                    </BrowserRouter>
+                </ThemeProvider>
+            </Provider>
+        </React.StrictMode>
+    );
+} else {
+    console.error("Root element not found");
+}

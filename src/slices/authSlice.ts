@@ -1,8 +1,10 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import { supabase } from "../lib/supabaseClient";
+import type { User } from "@supabase/supabase-js";
 
 interface AuthState {
-    user: any | null;
+    user: User | null;
     isAuthenticated: boolean;
     loading: boolean;
 }
@@ -24,7 +26,7 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        signin(state, action: PayloadAction<any>) {
+        signin(state, action: PayloadAction<User>) {
             state.user = action.payload;
             state.isAuthenticated = true;
             state.loading = false;

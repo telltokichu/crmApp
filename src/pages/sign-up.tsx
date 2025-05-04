@@ -173,13 +173,13 @@ const SignUp = () => {
                     </form>
                 </Form>
                 <div className="text-center text-sm">
-                    <a
-                        href="#"
-                        className="underline underline-offset-4"
+                    <button
+                        type="button"
+                        className="underline underline-offset-4 cursor-pointer"
                         onClick={() => navigate("/signin")}
                     >
                         Back to sign in
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>

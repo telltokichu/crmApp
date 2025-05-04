@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { AppDispatch } from "@/store/store";
+import type { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
 import { signin } from "@/slices/authSlice";
 import { supabase } from "../lib/supabaseClient";
@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import type { User } from "@supabase/supabase-js";
 
 const SignIn = () => {
     const navigate = useNavigate();
@@ -63,7 +64,7 @@ const SignIn = () => {
         if (error) {
             setServerError(error.message);
         } else if (data?.user) {
-            dispatch(signin(data.user));
+            dispatch(signin(data.user as User));
         }
     };
 
@@ -129,16 +130,13 @@ const SignIn = () => {
                 </Form>
                 {resetMessage && <p className="text-sm text-red-600">{resetMessage}</p>}
                 <div className="text-center text-sm mt-4">
-                    <a
-                        href="#"
-                        className="underline underline-offset-4"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setShowReset(false);
-                        }}
+                    <button
+                        type="button"
+                        className="underline underline-offset-4 cursor-pointer"
+                        onClick={() => setShowReset(false)}
                     >
                         Back to sign in
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -190,17 +188,16 @@ const SignIn = () => {
                                 {serverError && (
                                     <p className="text-sm text-red-600">{serverError}</p>
                                 )}
-                                <a
-                                    href="#"
-                                    className="mt-2 ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                                    onClick={(e) => {
-                                        e.preventDefault();
+                                <button
+                                    type="button"
+                                    className="mt-2 ml-auto inline-block text-sm underline-offset-4 hover:underline text-left cursor-pointer"
+                                    onClick={() => {
                                         setShowReset(true);
                                         form.reset();
                                     }}
                                 >
                                     Forgot your password?
-                                </a>
+                                </button>
                             </div>
                             <Button type="submit" className="w-full" disabled={loading}>
                                 {loading ? "Signing in..." : "Sign In"}
@@ -210,13 +207,13 @@ const SignIn = () => {
                 </Form>
                 <div className="text-center text-sm">
                     Don&apos;t have an account?{" "}
-                    <a
-                        href="#"
-                        className="underline underline-offset-4"
+                    <button
+                        type="button"
+                        className="underline-offset-4 underline cursor-pointer"
                         onClick={() => navigate("/signup")}
                     >
                         Sign up
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>

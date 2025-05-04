@@ -1,5 +1,3 @@
-// import { useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,7 +31,7 @@ type ResetFormValues = z.infer<typeof resetSchema>;
 const ResetPassword = () => {
     const dispatch = useDispatch();
     // const navigate = useNavigate();
-
+    // const [searchParams] = useSearchParams();
     const form = useForm<ResetFormValues>({
         resolver: zodResolver(resetSchema),
         defaultValues: {
@@ -42,17 +40,15 @@ const ResetPassword = () => {
         },
     });
 
-    // useEffect(() => {
-    //     const hashParams = new URLSearchParams(window.location.hash.slice(1));
-    //     console.log("hashParams: ", hashParams);
-    //     const type = hashParams.get("type");
-    //     console.log("type: ", type);
-
-    //     if (type !== "recovery") {
-    //         toast.error("Invalid recovery link");
-    //         // navigate("/signin");
-    //     }
-    // }, [navigate]);
+    const singOut = async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error("Error during logout:", error.message);
+        } else {
+            console.log("signed out successfully");
+            dispatch(signout());
+        }
+    };
 
     const handleUpdate = async (values: ResetFormValues) => {
         const { error } = await supabase.auth.updateUser({ password: values.password });
@@ -61,12 +57,7 @@ const ResetPassword = () => {
             toast.error(error.message);
         } else {
             toast.success("Password updated successfully");
-            const { error } = await supabase.auth.signOut();
-            if (error) {
-                console.error("Error during logout:", error.message);
-            } else {
-                dispatch(signout());
-            }
+            singOut();
         }
     };
 
