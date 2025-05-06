@@ -57,22 +57,20 @@ const SignUp = () => {
     const onSubmit = async (values: SignUpFormValues) => {
         setServerError("");
         setLoading(true);
-        const { data, error } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
             email: values.email,
             password: values.password,
+            options: {
+                data: {
+                    role: values.role,
+                },
+            },
         });
 
         if (error) {
             setServerError(error.message);
             setLoading(false);
             return;
-        }
-
-        // Set role in user metadata (optional, or store separately)
-        if (data.user) {
-            await supabase.auth.updateUser({
-                data: { role: values.role },
-            });
         }
 
         setLoading(false);

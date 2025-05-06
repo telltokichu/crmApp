@@ -1,30 +1,35 @@
-import { AppSidebar } from "@/components/app-sidebar";
-import { ChartAreaInteractive } from "@/components/chart-area-interactive";
-import { DataTable } from "@/components/data-table";
-import { SectionCards } from "@/components/section-cards";
-import { SiteHeader } from "@/components/site-header";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-
-import data from "../assets/partials/data.json";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import BarCharts from "@/components/bar-charts";
+import LineCharts from "@/components/line-charts";
+import PieCharts from "@/components/pie-charts";
 
 export default function Dashboard() {
     return (
-        <SidebarProvider>
-            <AppSidebar variant="inset" />
-            <SidebarInset>
-                <SiteHeader />
-                <div className="flex flex-1 flex-col">
-                    <div className="@container/main flex flex-1 flex-col gap-2">
-                        <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-                            <SectionCards />
-                            <div className="px-4 lg:px-6">
-                                <ChartAreaInteractive />
-                            </div>
-                            <DataTable data={data} />
-                        </div>
-                    </div>
-                </div>
-            </SidebarInset>
-        </SidebarProvider>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-6">
+            <Card>
+                <CardHeader>
+                    <CardTitle>Policy Count by Type & Status</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <BarCharts />
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Total Coverage Over Time</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <LineCharts />
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Policy Distribution by Region</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <PieCharts />
+                </CardContent>
+            </Card>
+        </div>
     );
 }

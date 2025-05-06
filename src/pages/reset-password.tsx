@@ -45,7 +45,6 @@ const ResetPassword = () => {
         if (error) {
             console.error("Error during logout:", error.message);
         } else {
-            console.log("signed out successfully");
             dispatch(signout());
         }
     };

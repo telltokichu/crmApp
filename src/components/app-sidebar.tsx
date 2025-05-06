@@ -15,6 +15,7 @@ import {
     IconSearch,
     IconSettings,
     IconUsers,
+    IconLicense,
 } from "@tabler/icons-react";
 
 import { NavDocuments } from "@/components/nav-documents";
@@ -32,6 +33,8 @@ import {
 } from "@/components/ui/sidebar";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
+import { Button } from "./ui/button";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const data = {
     user: {
@@ -44,26 +47,13 @@ const data = {
             title: "Dashboard",
             url: "#",
             icon: IconDashboard,
+            path: "/dashboard",
         },
         {
-            title: "Lifecycle",
+            title: "Policies",
             url: "#",
-            icon: IconListDetails,
-        },
-        {
-            title: "Analytics",
-            url: "#",
-            icon: IconChartBar,
-        },
-        {
-            title: "Projects",
-            url: "#",
-            icon: IconFolder,
-        },
-        {
-            title: "Team",
-            url: "#",
-            icon: IconUsers,
+            icon: IconLicense,
+            path: "/policies",
         },
     ],
     navClouds: [
@@ -152,7 +142,8 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const { user } = useSelector((state: RootState) => state.auth);
-
+    const navigate = useNavigate();
+    const location = useLocation();
     return (
         <Sidebar collapsible="offcanvas" {...props}>
             <SidebarHeader>
@@ -162,18 +153,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             asChild
                             className="data-[slot=sidebar-menu-button]:!p-1.5"
                         >
-                            <a href="/dashboard">
+                            <Button onClick={() => navigate("/dashboard")} variant={"outline"}>
                                 <IconInnerShadowTop className="!size-5" />
                                 <span className="text-base font-semibold">CRM App</span>
-                            </a>
+                            </Button>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
-                <NavMain items={data.navMain} />
-                <NavDocuments items={data.documents} />
-                <NavSecondary items={data.navSecondary} className="mt-auto" />
+                <NavMain items={data.navMain} activePath={location.pathname} />
+                {/* <NavDocuments items={data.documents} /> */}
+                {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={user} />
