@@ -7,7 +7,7 @@ import {
     getPaginationRowModel,
     getSortedRowModel,
 } from "@tanstack/react-table";
-import type { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import {
     Table,
     TableBody,
@@ -30,7 +30,7 @@ type Policy = {
 
 export default function PoliciesPage() {
     const [data, setData] = useState<Policy[]>([]);
-    const [tableSorting, setTableSorting] = useState([]);
+    const [tableSorting, setTableSorting] = useState<SortingState>([]);
 
     useEffect(() => {
         (async () => {

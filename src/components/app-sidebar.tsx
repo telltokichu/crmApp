@@ -1,26 +1,20 @@
 import type React from "react";
 import {
     IconCamera,
-    IconChartBar,
     IconDashboard,
     IconDatabase,
     IconFileAi,
     IconFileDescription,
     IconFileWord,
-    IconFolder,
     IconHelp,
     IconInnerShadowTop,
-    IconListDetails,
     IconReport,
     IconSearch,
     IconSettings,
-    IconUsers,
     IconLicense,
 } from "@tabler/icons-react";
 
-import { NavDocuments } from "@/components/nav-documents";
 import { NavMain } from "@/components/nav-main";
-import { NavSecondary } from "@/components/nav-secondary";
 import { NavUser } from "@/components/nav-user";
 import {
     Sidebar,
@@ -31,8 +25,6 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/store/store";
 import { Button } from "./ui/button";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -141,7 +133,6 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const { user } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
     const location = useLocation();
     return (
@@ -167,7 +158,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
             </SidebarContent>
             <SidebarFooter>
-                <NavUser user={user} />
+                <NavUser />
             </SidebarFooter>
         </Sidebar>
     );

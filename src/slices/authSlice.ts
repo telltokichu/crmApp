@@ -12,7 +12,7 @@ interface AuthState {
 const initialState: AuthState = {
     user: null,
     isAuthenticated: false,
-    loading: true, // important!
+    loading: true,
 };
 
 // Load user from Supabase Session
